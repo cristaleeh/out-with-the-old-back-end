@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors'); 
 const logger = require('morgan');
 const testJwtRouter = require('./controllers/test-jwt');
+const authRouter = require('./controllers/auth');
 
 
 
@@ -22,7 +23,20 @@ app.use(express.json()); //parse json data into js becuse json comes in a string
 app.use(logger('dev'));
 
 
+
+
+//Routes//
+app.use('/auth', authRouter);
 app.use('/test-jwt', testJwtRouter);
+
+
+
+
+
+
+
+
+
 
 app.listen(3000, () => {
   console.log('Is this thing working!?', 3000);
