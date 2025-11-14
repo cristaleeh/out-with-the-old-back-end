@@ -1,8 +1,6 @@
-//we need model in order to talk and do things in our database (mongoose)(communicator)
+
 const mongoose = require('mongoose');
 
-//build our schema
-//new- because schema is a class we are building a new instance of schema
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -21,7 +19,12 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-//register the model
-const User = mongoose.model('User', userSchema);
+userSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    delete returnedObject.hashedPassword;
+  }
+});
 
+
+const User = mongoose.model('User', userSchema);
 module.exports = User;

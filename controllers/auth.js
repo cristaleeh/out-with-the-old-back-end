@@ -15,10 +15,10 @@ const saltRounds = 12;
 router.post('/sign-up', async (req, res) => {
   try {
 
-    const { username, email, password } = req.body;
+    const { username, email, password } = req.body; //Destructuring
 
     const usernameInDatabase = await User.findOne({ username });
-    const emailInDatabase = await User.findOne({ email })
+    const emailInDatabase = await User.findOne({ email });
 
     if (usernameInDatabase) {
       return res.status(409).json({err:`${username} is already taken sorry 🥺`});
@@ -38,7 +38,7 @@ router.post('/sign-up', async (req, res) => {
     const token = jwt.sign({ payload }, process.env.JWT_SECRET);// by sending this token means ur authenticated--signs up and also signs in
 
 
-    res.status(201).json({ user });
+    res.status(201).json({ token });
   } catch (err) {
     res.status(500).json({ err: err.message });
   }

@@ -5,8 +5,13 @@ const mongoose = require('mongoose');
 const cors = require('cors'); 
 const logger = require('morgan');
 const testJwtRouter = require('./controllers/test-jwt');
-const authRouter = require('./controllers/auth');
 
+
+//ROUTERS
+const authRouter = require('./controllers/auth');
+const userRouter = require('./controllers/users');
+const productRouter = require('./controllers/product');
+const categoryRouter = require('./controllers/category');
 
 
 //connect to mongoose code//
@@ -23,18 +28,12 @@ app.use(express.json()); //parse json data into js becuse json comes in a string
 app.use(logger('dev'));
 
 
-
-
 //Routes//
 app.use('/auth', authRouter);
 app.use('/test-jwt', testJwtRouter);
-
-
-
-
-
-
-
+app.use('/users', userRouter);
+app.use('/products',productRouter);
+app.use('/category', categoryRouter);
 
 
 

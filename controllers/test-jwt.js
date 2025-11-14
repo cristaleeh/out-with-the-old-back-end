@@ -8,16 +8,20 @@ router.get('/sign-token', (req, res) => {
   username: "John Doe",
   password: 'test'
  };
- const token = jwt.sign({ user }, process.env.JWT_SECRET); //sign method- to sign the tokem
- res.json({ token })// send this token to client
+ const token = jwt.sign({ user }, process.env.JWT_SECRET);
+ res.json({ token })
 });
 
 router.post('/verify-token', (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];//split where there is space, its going to create an array in order to grab the token in the array you have have to put the index [1]--thats where the token is @
+  try {
+    const token = req.headers.authorization.split(" ")[1]
 
-const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  res.json({ decoded }); //decoded payload- we get to see the user info on postman
+  res.json({ decoded }); 
+  } catch (err) {
+    res.status(401).json({ err: 'Invalid token.' });
+  }
 });
 
 module.exports = router;
